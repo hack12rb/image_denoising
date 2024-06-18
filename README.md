@@ -60,5 +60,3 @@ The clean images (ground truth) are displayed for comparison with the predicted 
 - Jupyter Notebook
 - Necessary Python libraries (e.g., TensorFlow, NumPy, Matplotlib)
 
-## Acknowledgements
-This project is based on the principles of deep learning and image processing. Special thanks to the authors and contributors of the libraries used in this notebook.
