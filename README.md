@@ -1,4 +1,3 @@
-# image_denoising
 # Image Denoising using Convolutional Neural Networks
 
 ## Project Description
@@ -9,19 +8,11 @@ This project focuses on image denoising using Convolutional Neural Networks (CNN
 
 The model uses a CNN architecture with multiple convolutional and upsampling layers. The architecture effectively captures and removes noise from the input images. Key specifications include:
 - **Framework:** TensorFlow/Keras
-- **Layers:** Multiple convolutional layers with ReLU activation and upsampling layers.
+- **Layers:** Multiple convolutional layers with LeakyReLU activation and upsampling layers.
 - **Optimizer:** Adam
-- **Loss Function:** Mean Squared Error (MSE)
+- **Loss Function:** Binary_crossentropy
 
-The model achieved an average PSNR (Peak Signal-to-Noise Ratio) of 17.99 dB.
-
-## Dataset
-
-The dataset comprises pairs of noisy and clean images. It is assumed to be organized in directories as follows:
-- `train/`: Contains training images
-- `test/`: Contains testing images
-
-## Setup Instructions
+The model achieved an average PSNR (Peak Signal-to-Noise Ratio) of 17.62 dB.
 
 ### Prerequisites
 
@@ -44,7 +35,7 @@ Ensure you have the following installed:
     pip install tensorflow numpy matplotlib
     ```
 
-3. Ensure your dataset is in the correct format and paths.
+
 
 ## Usage
 
@@ -80,22 +71,20 @@ Ensure you have the following installed:
     from tensorflow.keras.layers import Conv2D, UpSampling2D
 
     model = Sequential([
-        Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(256, 256, 3)),
-        Conv2D(32, (3, 3), activation='relu', padding='same'),
+        Conv2D(32, (3, 3), activation=LeakyReLU(), padding='same', input_shape=(256, 256, 3)),
+        Conv2D(32, (3, 3), activation=LeakyReLU(), padding='same'),
         UpSampling2D((2, 2)),
-        Conv2D(64, (3, 3), activation='relu', padding='same'),
+        Conv2D(64, (3, 3), activation=LeakyReLU(), padding='same'),
         UpSampling2D((2, 2)),
         Conv2D(3, (3, 3), activation='sigmoid', padding='same')
     ])
 
-    model.compile(optimizer='adam', loss='mse')
+    model.compile(optimizer='adam', loss='binary_crossentropy')
     model.summary()
     ```
 
 3. Train the model:
-    ```python
-    history = model.fit(train_ds, epochs=100, validation_data=test_ds)
-    ```
+    
 
 ### Evaluating the Model
 
@@ -113,56 +102,22 @@ Ensure you have the following installed:
     print(f'Average PSNR: {average_psnr}')
     ```
 
-### Visualizing Results
 
-1. Display images:
-    ```python
-    import matplotlib.pyplot as plt
-
-    def display_images(noisy_images, denoised_images, clean_images, n=5):
-        plt.figure(figsize=(20, 10))
-        
-        for i in range(n):
-            ax = plt.subplot(3, n, i + 1)
-            plt.imshow(np.clip(noisy_images[i], 0, 1))
-            plt.title("Noisy Image")
-            plt.axis("off")
             
-            ax = plt.subplot(3, n, i + 1 + n)
-            plt.imshow(np.clip(denoised_images[i], 0, 1))
-            plt.title("Denoised Image")
-            plt.axis("off")
-            
-            ax = plt.subplot(3, n, i + 1 + 2 * n)
-            plt.imshow(np.clip(clean_images[i], 0, 1))
-            plt.title("Clean Image")
-            plt.axis("off")
-        
-        plt.show()
-
-    display_images(noisy_images, denoised_images, clean_images, n=5)
-    ```
+           
+           
+    
 
 ## Summary and Future Work
 
 ### Findings
 - The CNN-based model effectively reduces noise in images.
-- Achieved an average PSNR of 17.99 dB.
+- Achieved an average PSNR of 17.62 dB.
 
 ### Improvements
 - Experiment with deeper networks or adding skip connections.
 - Use data augmentation to improve robustness.
 - Implement advanced loss functions like Structural Similarity Index (SSIM) for better perceptual quality.
 
-## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-
-The project is inspired by various research papers on image denoising using deep learning.
-
-## Contact
-
-For any inquiries, please contact [your-email@example.com].
 
