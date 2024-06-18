@@ -60,3 +60,14 @@ The clean images (ground truth) are displayed for comparison with the predicted 
 - Jupyter Notebook
 - Necessary Python libraries (e.g., TensorFlow, NumPy, Matplotlib)
 
+- ## Summary and Future Work
+
+### Findings
+- The CNN-based model effectively reduces noise in images.
+- Achieved an average PSNR of 17.62 dB.
+
+### Improvements
+- Experiment with deeper networks or adding skip connections.
+- Use data augmentation to improve robustness.
+- Implement advanced loss functions like Structural Similarity Index (SSIM) for better perceptual quality.
+
