@@ -1,123 +1,60 @@
-# Image Denoising using Convolutional Neural Networks
+Deep CNN Autoencoder - Denoising Image
+This Jupyter notebook demonstrates the use of a deep convolutional neural network (CNN) autoencoder for image denoising. The model is trained to remove noise from images, producing cleaner versions as output.
 
-## Project Description
+Table of Contents
+Installation of Libraries
+Loading and Preprocessing Images
+Splitting the Dataset
+PSNR Function and Custom PSNR Callback
+Model Architecture
+Training and Testing Loss Plot
+PSNR Score Calculation
+Predicted Images
+Noisy Images
+Clean Images
+Installation of Libraries
+This section covers the installation of necessary libraries. Ensure you have the required libraries installed before running the notebook.
 
-This project focuses on image denoising using Convolutional Neural Networks (CNNs). The goal is to reduce noise from images and recover the clean image. The implemented model is trained and evaluated using a dataset of noisy and clean image pairs.
+Loading and Preprocessing Images
+In this section, images are loaded and preprocessed to prepare them for training the autoencoder model. This includes resizing images and adding noise to create the training dataset.
 
-## Architecture
+Splitting the Dataset
+The dataset is split into training and testing sets. This step is crucial to evaluate the performance of the model on unseen data.
 
-The model uses a CNN architecture with multiple convolutional and upsampling layers. The architecture effectively captures and removes noise from the input images. Key specifications include:
-- **Framework:** TensorFlow/Keras
-- **Layers:** Multiple convolutional layers with LeakyReLU activation and upsampling layers.
-- **Optimizer:** Adam
-- **Loss Function:** Binary_crossentropy
+PSNR Function and Custom PSNR Callback
+Here, the Peak Signal-to-Noise Ratio (PSNR) function is defined along with a custom callback to monitor PSNR during training.
 
-The model achieved an average PSNR (Peak Signal-to-Noise Ratio) of 17.62 dB.
+Model Architecture
+This section defines the architecture of the deep CNN autoencoder. The model is built using convolutional layers that help in learning the features of the images for denoising.
 
-### Prerequisites
+Training and Testing Loss Plot
+After training the model, this section plots the training and testing loss over epochs to visualize the learning process.
 
-Ensure you have the following installed:
-- Python 3.7 or later
-- TensorFlow 2.x
-- NumPy
-- Matplotlib
+PSNR Score Calculation
+The PSNR score for the testing data is calculated in this section to measure the quality of the denoised images.
 
-### Installation
+Predicted Images
+Here, the denoised (predicted) images are displayed to show the results of the model's performance.
 
-1. Clone the repository:
-    ```sh
-    git clone https://github.com/your-username/image-denoising-cnn.git
-    cd image-denoising-cnn
-    ```
+Noisy Images
+This section displays the noisy images that were used as input for the model.
 
-2. Install the required packages:
-    ```sh
-    pip install tensorflow numpy matplotlib
-    ```
+Clean Images
+The clean images (ground truth) are displayed for comparison with the predicted images.
 
-
-
-## Usage
-
-### Training the Model
-
-1. Load and preprocess the dataset:
-    ```python
-    import tensorflow as tf
-    from tensorflow.keras.preprocessing import image_dataset_from_directory
-
-    train_ds = image_dataset_from_directory(
-        'path/to/train',
-        image_size=(256, 256),
-        batch_size=32,
-        label_mode=None
-    )
-
-    test_ds = image_dataset_from_directory(
-        'path/to/test',
-        image_size=(256, 256),
-        batch_size=32,
-        label_mode=None
-    )
-
-    normalization_layer = tf.keras.layers.Rescaling(1./255)
-    train_ds = train_ds.map(lambda x: normalization_layer(x))
-    test_ds = test_ds.map(lambda x: normalization_layer(x))
-    ```
-
-2. Define and compile the model:
-    ```python
-    from tensorflow.keras.models import Sequential
-    from tensorflow.keras.layers import Conv2D, UpSampling2D
-
-    model = Sequential([
-        Conv2D(32, (3, 3), activation=LeakyReLU(), padding='same', input_shape=(256, 256, 3)),
-        Conv2D(32, (3, 3), activation=LeakyReLU(), padding='same'),
-        UpSampling2D((2, 2)),
-        Conv2D(64, (3, 3), activation=LeakyReLU(), padding='same'),
-        UpSampling2D((2, 2)),
-        Conv2D(3, (3, 3), activation='sigmoid', padding='same')
-    ])
-
-    model.compile(optimizer='adam', loss='binary_crossentropy')
-    model.summary()
-    ```
-
-3. Train the model:
-    
-
-### Evaluating the Model
-
-1. Calculate PSNR for evaluation:
-    ```python
-    from skimage.metrics import peak_signal_noise_ratio as psnr
-    import numpy as np
-
-    noisy_images = next(iter(train_noisy_ds)).numpy()
-    clean_images = next(iter(train_ds)).numpy()
-    denoised_images = model.predict(noisy_images)
-
-    psnr_values = [psnr(clean_images[i], denoised_images[i]) for i in range(len(clean_images))]
-    average_psnr = np.mean(psnr_values)
-    print(f'Average PSNR: {average_psnr}')
-    ```
-
-
-            
-           
-           
-    
-
-## Summary and Future Work
-
-### Findings
-- The CNN-based model effectively reduces noise in images.
-- Achieved an average PSNR of 17.62 dB.
-
-### Improvements
-- Experiment with deeper networks or adding skip connections.
-- Use data augmentation to improve robustness.
-- Implement advanced loss functions like Structural Similarity Index (SSIM) for better perceptual quality.
-
-
-
+How to Run the Notebook
+Clone the repository or download the notebook file.
+Install the necessary libraries as mentioned in the first section.
+Load and preprocess the images as described.
+Split the dataset into training and testing sets.
+Define the PSNR function and custom callback.
+Build and train the model using the defined architecture.
+Plot the training and testing loss.
+Calculate the PSNR score for the testing data.
+Display the predicted, noisy, and clean images for evaluation.
+Requirements
+Python 3.x
+Jupyter Notebook
+Necessary Python libraries (e.g., TensorFlow, NumPy, Matplotlib)
+Acknowledgements
+This project is based on the principles of deep learning and image processing. Special thanks to the authors and contributors of the libraries used in this notebook.
