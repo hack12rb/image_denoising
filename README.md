@@ -1,4 +1,4 @@
-# Deep CNN Autoencoder - Denoising Image
+# IMAGE DENOISING
 
 This Jupyter notebook demonstrates the use of a deep convolutional neural network (CNN) autoencoder for image denoising. The model is trained to remove noise from images, producing cleaner versions as output.
 
